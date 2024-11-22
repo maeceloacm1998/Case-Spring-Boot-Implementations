@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -37,6 +38,9 @@ class ExampleController(
         ]
     )
     fun example(): List<ExampleVO> {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val username = authentication.name
+        println("User $username is requesting examples")
         return exampleService.findAll()
     }
 

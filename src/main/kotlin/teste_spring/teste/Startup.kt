@@ -3,15 +3,25 @@ package teste_spring.teste
 import java.util.HashMap
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
+import javax.sql.DataSource
 
 
 @SpringBootApplication
-class Startup
+class Startup {
+	@Bean
+	@ConfigurationProperties(prefix = "spring.datasource")
+	fun dataSource(): DataSource {
+		return DataSourceBuilder.create().build()
+	}
+}
 
 fun main(args: Array<String>) {
 	runApplication<Startup>(*args)

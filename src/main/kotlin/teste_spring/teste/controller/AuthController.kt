@@ -1,4 +1,4 @@
-package teste_spring.teste.config
+package teste_spring.teste.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

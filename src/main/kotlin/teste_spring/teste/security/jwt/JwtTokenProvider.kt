@@ -1,9 +1,10 @@
 package teste_spring.teste.security.jwt
 
-import br.com.erudio.exceptions.InvalidJwtAuthenticationException
+import teste_spring.teste.exceptions.InvalidJwtAuthenticationException
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.auth0.jwt.interfaces.DecodedJWT
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import teste_spring.teste.data.vo.v1.TokenVO
+import java.time.Instant
 import java.util.*
 
 @Service
@@ -99,7 +101,6 @@ class JwtTokenProvider {
 
     fun resolveToken(req: HttpServletRequest): String? {
         val bearerToken = req.getHeader("Authorization")
-        // Bearer sjdfgdfsjkg565dfh65hdfdhdf6hdhdfh54hd79d
         return if(!bearerToken.isNullOrBlank() && bearerToken.startsWith("Bearer ")) {
             bearerToken.substring("Bearer ".length)
         } else null
@@ -108,7 +109,7 @@ class JwtTokenProvider {
     fun validateToken(token: String): Boolean {
         val decodedJWT = decodedToken(token)
         try {
-            if(decodedJWT.expiresAt.before(Date())) false
+            if(decodedJWT.expiresAt.before(Date())) throw TokenExpiredException("Token expired!", Instant.now())
             return true
         } catch (e: Exception) {
             throw InvalidJwtAuthenticationException("Expired or invalid JWT token!")

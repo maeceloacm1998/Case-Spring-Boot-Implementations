@@ -1,4 +1,4 @@
-package br.com.erudio.exceptions
+package teste_spring.teste.exceptions
 
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.AuthenticationException
