@@ -1,7 +1,3 @@
-CREATE DATABASE IF NOT EXISTS `rest_wtih_springboot`;
-
-USE `rest_wtih_springboot`;
-
 CREATE TABLE IF NOT EXISTS `example` (
                                          `id` bigint NOT NULL AUTO_INCREMENT,
                                          `name` varchar(255) DEFAULT NULL,
