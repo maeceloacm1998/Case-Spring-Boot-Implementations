@@ -51,6 +51,7 @@ class User : UserDetails {
     )
     var permissions: MutableList<Permission>? = null
 
+
     val roles: List<String?>
         get() {
             val roles: MutableList<String?> = ArrayList()
