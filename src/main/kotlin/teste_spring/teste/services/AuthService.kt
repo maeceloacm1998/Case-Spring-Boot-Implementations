@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import teste_spring.teste.data.vo.v1.AccountCredentialsVO
 import teste_spring.teste.data.vo.v1.TokenVO
-import teste_spring.teste.mapper.DozerMapper
+import teste_spring.teste.data.vo.v1.UpdateRegisterVO
 import teste_spring.teste.models.User
 import teste_spring.teste.repository.UserRepository
 import teste_spring.teste.security.jwt.JwtTokenProvider
@@ -86,5 +86,21 @@ class AuthService {
 
         repository.save(newUser)
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully")
+    }
+
+    fun updateRegister(data: UpdateRegisterVO, username: String): ResponseEntity<*> {
+        logger.info("Trying update user $username")
+        val user = repository.findByUsername(username)
+            ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found")
+
+        user.apply {
+            setFullName(data.fullName!!)
+            setBirthDate(data.birthDate!!)
+            setPhoneNumber(data.phoneNumber!!)
+            setPhotoUrl(data.photoUrl!!)
+        }
+
+        repository.save(user)
+        return ResponseEntity.status(HttpStatus.OK).body("User updated successfully")
     }
 }

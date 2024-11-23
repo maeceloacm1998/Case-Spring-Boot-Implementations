@@ -7,7 +7,7 @@ import teste_spring.teste.models.Permission
 
 @Entity
 @Table(name = "users")
-class User : UserDetails{
+class User : UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,16 @@ class User : UserDetails{
     var userName: String? = null
 
     @Column(name = "full_name")
-    var fullName: String? = null
+    private var fullName: String? = null
+
+    @Column(name = "birth_date")
+    private var birthDate: String? = null
+
+    @Column(name = "phone_number")
+    private var phoneNumber: String? = null
+
+    @Column(name = "photo_url")
+    private var photoUrl: String? = null
 
     @Column(name = "password")
     private var password: String? = null
@@ -43,13 +52,13 @@ class User : UserDetails{
     var permissions: MutableList<Permission>? = null
 
     val roles: List<String?>
-     get(){
-         val roles: MutableList<String?> = ArrayList()
-         for (permission in permissions!!) {
-             roles.add(permission.description)
-         }
-         return roles
-     }
+        get() {
+            val roles: MutableList<String?> = ArrayList()
+            for (permission in permissions!!) {
+                roles.add(permission.description)
+            }
+            return roles
+        }
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return permissions!!
@@ -59,8 +68,24 @@ class User : UserDetails{
         return password!!
     }
 
-    fun setPassword(password: String){
+    fun setPassword(password: String) {
         this.password = password
+    }
+
+    fun setFullName(fullName: String) {
+        this.fullName = fullName
+    }
+
+    fun setBirthDate(birthDate: String) {
+        this.birthDate = birthDate
+    }
+
+    fun setPhoneNumber(phoneNumber: String) {
+        this.phoneNumber = phoneNumber
+    }
+
+    fun setPhotoUrl(photoUrl: String) {
+        this.photoUrl = photoUrl
     }
 
     override fun getUsername(): String {

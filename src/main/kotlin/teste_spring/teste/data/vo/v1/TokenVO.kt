@@ -3,7 +3,6 @@ package teste_spring.teste.data.vo.v1
 import java.util.*
 
 data class TokenVO(
-
     val username: String? = null,
     val authenticated: Boolean? = null,
     val created: Date? = null,
